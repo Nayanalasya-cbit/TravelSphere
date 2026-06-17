@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar";
 import TripCard from "../components/TripCard";
 import "./Dashboard.css";
 
+const API_URL = "https://travelsphere-lvz4.onrender.com";
+
 function Dashboard() {
   const [trips, setTrips] = useState([]);
 
@@ -19,7 +21,7 @@ function Dashboard() {
   const token = localStorage.getItem("token");
 
   const fetchTrips = async () => {
-    const res = await axios.get("http://localhost:5000/api/trips/my-trips", {
+    const res = await axios.get(`${API_URL}/api/trips/my-trips`, {
       headers: {
         Authorization: token,
       },
@@ -42,7 +44,7 @@ function Dashboard() {
       formData.append("image", image);
 
       const uploadRes = await axios.post(
-        "http://localhost:5000/api/upload",
+        `${API_URL}/api/upload`,
         formData
       );
 
@@ -51,7 +53,7 @@ function Dashboard() {
 
     if (editingId) {
       await axios.put(
-        `http://localhost:5000/api/trips/${editingId}`,
+        `${API_URL}/api/trips/${editingId}`,
         {
           title,
           destination,
@@ -69,7 +71,7 @@ function Dashboard() {
       setEditingId(null);
     } else {
       await axios.post(
-        "http://localhost:5000/api/trips",
+        `${API_URL}/api/trips`,
         {
           title,
           destination,
@@ -99,7 +101,7 @@ function Dashboard() {
   const generateItinerary = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/ai/itinerary",
+        `${API_URL}/api/ai/itinerary`,
         {
           destination,
           budget,
@@ -127,7 +129,7 @@ function Dashboard() {
   };
 
   const deleteTrip = async (id) => {
-    await axios.delete(`http://localhost:5000/api/trips/${id}`, {
+    await axios.delete(`${API_URL}/api/trips/${id}`, {
       headers: {
         Authorization: token,
       },
@@ -142,111 +144,111 @@ function Dashboard() {
   };
 
   return (
-  <div>
-    <Navbar />
+    <div>
+      <Navbar />
 
-    <div className="dashboard-container">
-      <h1 className="dashboard-title">
-        TravelSphere Dashboard
-      </h1>
+      <div className="dashboard-container">
+        <h1 className="dashboard-title">
+          TravelSphere Dashboard
+        </h1>
 
-      <button onClick={logout}>Logout</button>
+        <button onClick={logout}>Logout</button>
 
-      <h2>
-        {editingId ? "Update Trip" : "Create Trip"}
-      </h2>
-
-      <form className="trip-form" onSubmit={createTrip}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <br /><br />
-
-        <input
-          type="text"
-          placeholder="Destination"
-          value={destination}
-          onChange={(e) => setDestination(e.target.value)}
-        />
-
-        <br /><br />
-
-        <input
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <br /><br />
-
-        <input
-          type="text"
-          placeholder="Budget"
-          value={budget}
-          onChange={(e) => setBudget(e.target.value)}
-        />
-
-        <br /><br />
-
-        <input
-          type="number"
-          placeholder="Days"
-          value={days}
-          onChange={(e) => setDays(e.target.value)}
-        />
-
-        <br /><br />
-
-        <input
-          type="file"
-          onChange={(e) => setImage(e.target.files[0])}
-        />
-
-        <br /><br />
-
-        <button type="submit">
+        <h2>
           {editingId ? "Update Trip" : "Create Trip"}
-        </button>
+        </h2>
 
-        <br /><br />
-
-        <button
-          type="button"
-          onClick={generateItinerary}
-        >
-          Generate AI Itinerary
-        </button>
-      </form>
-
-      {itinerary && (
-        <div className="ai-box">
-          <h3>AI Itinerary</h3>
-          {itinerary}
-        </div>
-      )}
-
-      <hr />
-
-      <h2>My Trips</h2>
-
-      <div className="trip-grid">
-        {trips.map((trip) => (
-          <TripCard
-            key={trip._id}
-            trip={trip}
-            onDelete={deleteTrip}
-            onEdit={editTrip}
+        <form className="trip-form" onSubmit={createTrip}>
+          <input
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
-        ))}
+
+          <br /><br />
+
+          <input
+            type="text"
+            placeholder="Destination"
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+          />
+
+          <br /><br />
+
+          <input
+            type="text"
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+
+          <br /><br />
+
+          <input
+            type="text"
+            placeholder="Budget"
+            value={budget}
+            onChange={(e) => setBudget(e.target.value)}
+          />
+
+          <br /><br />
+
+          <input
+            type="number"
+            placeholder="Days"
+            value={days}
+            onChange={(e) => setDays(e.target.value)}
+          />
+
+          <br /><br />
+
+          <input
+            type="file"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+
+          <br /><br />
+
+          <button type="submit">
+            {editingId ? "Update Trip" : "Create Trip"}
+          </button>
+
+          <br /><br />
+
+          <button
+            type="button"
+            onClick={generateItinerary}
+          >
+            Generate AI Itinerary
+          </button>
+        </form>
+
+        {itinerary && (
+          <div className="ai-box">
+            <h3>AI Itinerary</h3>
+            {itinerary}
+          </div>
+        )}
+
+        <hr />
+
+        <h2>My Trips</h2>
+
+        <div className="trip-grid">
+          {trips.map((trip) => (
+            <TripCard
+              key={trip._id}
+              trip={trip}
+              onDelete={deleteTrip}
+              onEdit={editTrip}
+            />
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default Dashboard;

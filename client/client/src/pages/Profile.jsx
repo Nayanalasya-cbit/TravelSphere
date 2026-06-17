@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 
+const API_URL = "https://travelsphere-lvz4.onrender.com";
+
 function Profile() {
   const [user, setUser] = useState(null);
   const [name, setName] = useState("");
@@ -10,11 +12,14 @@ function Profile() {
   const token = localStorage.getItem("token");
 
   const fetchProfile = async () => {
-    const res = await axios.get("http://localhost:5000/api/users/profile", {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const res = await axios.get(
+      `${API_URL}/api/users/profile`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
 
     setUser(res.data);
     setName(res.data.name);
@@ -34,7 +39,7 @@ function Profile() {
       formData.append("image", avatar);
 
       const uploadRes = await axios.post(
-        "http://localhost:5000/api/upload",
+        `${API_URL}/api/upload`,
         formData
       );
 
@@ -42,7 +47,7 @@ function Profile() {
     }
 
     const res = await axios.put(
-      "http://localhost:5000/api/users/profile",
+      `${API_URL}/api/users/profile`,
       {
         name,
         avatar: avatarUrl,
