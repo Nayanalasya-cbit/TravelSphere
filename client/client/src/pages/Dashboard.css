@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+}
+
+.dashboard-container {
+  padding: 30px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.dashboard-title {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.trip-form {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  max-width: 600px;
+}
+
+.trip-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.trip-form button {
+  margin-right: 10px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.ai-box {
+  background: #f4f4f4;
+  padding: 18px;
+  margin-top: 20px;
+  border-radius: 12px;
+  white-space: pre-wrap;
+}
+
+.trip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
