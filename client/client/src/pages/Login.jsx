@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./Auth.css";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = "https://travelsphere-lvz4.onrender.com";
@@ -32,7 +33,8 @@ function Login() {
   };
 
   return (
-    <div>
+  <div className="auth-page">
+    <div className="auth-card">
       <h1>Login</h1>
 
       <form onSubmit={handleSubmit}>
@@ -43,8 +45,6 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <br /><br />
-
         <input
           type="password"
           placeholder="Enter Password"
@@ -52,14 +52,11 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <br /><br />
-
-        <button type="submit">
-          Login
-        </button>
+        <button type="submit">Login</button>
       </form>
     </div>
-  );
+  </div>
+);
 }
 
 export default Login;
